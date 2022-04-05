@@ -9,13 +9,13 @@
 using namespace std::chrono_literals;
 
 LockQueue<int32> q;
-LockStack<int32> s;
+LockFreeStack<int32> s;
 
 void Push()
 {
     while (true) {
         int32 val = rand() % 100;
-        q.Push(val);
+        s.Push(val);
 
         std::this_thread::sleep_for(10ms);
     }
@@ -26,7 +26,7 @@ void Pop()
     while (true) {
 
         int32 data = 0;
-        if (q.TryPop(data))
+        if (s.TryPop(data))
             cout << data << "\n";
     }
 }
