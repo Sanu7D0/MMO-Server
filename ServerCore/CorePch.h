@@ -12,4 +12,6 @@
 
 #include "Types.h"
 
+using std::cout;
+
 void HelloServer();
