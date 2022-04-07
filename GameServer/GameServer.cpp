@@ -8,14 +8,14 @@
 #include "ConcurrentStack.h"
 using namespace std::chrono_literals;
 
-LockQueue<int32> q;
+LockFreeQueue<int32> q;
 LockFreeStack<int32> s;
 
 void Push()
 {
     while (true) {
         int32 val = rand() % 100;
-        s.Push(val);
+        q.Push(val);
 
         std::this_thread::sleep_for(10ms);
     }
@@ -25,7 +25,7 @@ void Pop()
 {
     while (true) {
 
-        auto data = s.TryPop();
+        auto data = q.TryPop();
         if (data != nullptr)
             cout << *data << "\n";
     }
