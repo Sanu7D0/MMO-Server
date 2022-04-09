@@ -16,10 +16,10 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="ConcurrentQueue.cpp">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="ConcurrentStack.cpp">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -27,10 +27,10 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ConcurrentQueue.h">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ConcurrentStack.h">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

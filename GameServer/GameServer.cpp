@@ -1,43 +1,26 @@
 #include "pch.h"
 #include "CorePch.h"
-
+#include "CoreMacro.h"
+#include "ThreadManager.h"
 #include <atomic>
 #include <mutex>
 
-#include "ConcurrentQueue.h"
-#include "ConcurrentStack.h"
 using namespace std::chrono_literals;
 
-LockFreeQueue<int32> q;
-LockFreeStack<int32> s;
+CoreGlobal Core;
 
-void Push()
+void ThreadMain()
 {
     while (true) {
-        int32 val = rand() % 100;
-        q.Push(val);
-
-        std::this_thread::sleep_for(10ms);
-    }
-}
-
-void Pop()
-{
-    while (true) {
-
-        auto data = q.TryPop();
-        if (data != nullptr)
-            cout << *data << "\n";
+        std::cout << "Hi im thread " << LThreadId << "\n";
+        std::this_thread::sleep_for(1s);
     }
 }
 
 int main()
 {
-    std::thread t1(Push);
-    std::thread t2(Pop);
-    std::thread t3(Pop);
+    for (int32 i = 0; i < 5; ++i)
+        GThreadManager->Launch(ThreadMain);
 
-    t1.join();
-    t2.join();
-    t3.join();
+    GThreadManager->Join();
 }
