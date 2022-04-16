@@ -15,22 +15,22 @@
     <ClCompile Include="pch.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="ConcurrentQueue.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="AccountManager.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="ConcurrentStack.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ConcurrentQueue.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="AccountManager.h">
+      <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="ConcurrentStack.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

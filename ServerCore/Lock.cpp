@@ -1,11 +1,14 @@
 #include "pch.h"
 #include "Lock.h"
 #include "CoreTLS.h"
+#include "DeadLockProfiler.h"
 
-//#include "Windows.h"
-
-void Lock::WriteLock()
+void Lock::WriteLock(const char* name)
 {
+#if _DEBUG
+    GDeadLockProfiler->PushLock(name);
+#endif
+
     const uint32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
     if (LThreadId == lockThreadId) {
         _writeCount++;
@@ -30,9 +33,12 @@ void Lock::WriteLock()
     }
 }
 
-void Lock::WriteUnlock()
+void Lock::WriteUnlock(const char* name)
 { 
-    // DEBUG
+#if _DEBUG
+    GDeadLockProfiler->PopLock(name);
+#endif
+
     if ((_lockFlag.load() & READ_COUNT_MASK) != 0)
         CRASH("INVALID_UNLOCK_ORDER");
 
@@ -42,8 +48,12 @@ void Lock::WriteUnlock()
         //_lockFlag.store(_lockFlag.load() & READ_COUNT_MASK);
 }
 
-void Lock::ReadLock()
+void Lock::ReadLock(const char* name)
 {
+#if _DEBUG
+    GDeadLockProfiler->PushLock(name);
+#endif
+
     const uint32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
     if (LThreadId == lockThreadId) {
         _lockFlag.fetch_add(1);
@@ -65,8 +75,12 @@ void Lock::ReadLock()
     }
 }
 
-void Lock::ReadUnlock()
+void Lock::ReadUnlock(const char* name)
 {
+#if _DEBUG
+    GDeadLockProfiler->PopLock(name);
+#endif
+
     if ((_lockFlag.fetch_sub(1) & READ_COUNT_MASK) == 0)
         CRASH("MULTIPLE_UNLOCK");
 }
