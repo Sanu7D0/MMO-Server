@@ -2,28 +2,26 @@
 #include "CorePch.h"
 #include "CoreMacro.h"
 #include "ThreadManager.h"
+#include "Memory.h"
+
 #include <atomic>
 #include <mutex>
 
-#include "PlayerManager.h"
-#include "AccountManager.h"
+class RoadRuneer {
+public:
+    int32 madness;
+public:
+	RoadRuneer() {}
+    RoadRuneer(int32 madness) : madness(madness) { }
+    ~RoadRuneer() { }
+};
 
 int main()
 {
-    GThreadManager->Launch([=] {
-        while (true) {
-            std::cout << "PlayerThenAccount\n";
-            GPlayerManager.PlayerThenAaccount();
-            std::this_thread::sleep_for(100ms);
-        }
-    });
-    GThreadManager->Launch([=] {
-        while (true) {
-            std::cout << "AccountThenPlayer\n";
-            GAccountManager.AccountThenPlayer();
-            std::this_thread::sleep_for(100ms);
-        }
-    });
+    RoadRuneer* runner = xnew<RoadRuneer>(50);
+    xdelete(runner);
 
-    GThreadManager->Join();
+    xmap<int32, RoadRuneer> m;
+    m[100] = RoadRuneer();
+    std::cout << 1;
 }
